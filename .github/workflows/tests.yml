@@ -10,21 +10,6 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
-    services:
-      mongodb:
-        image: mongo
-        env:
-          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_USERNAME }}
-          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-          MONGO_INITDB_DATABASE: ComponentStockTesting
-        options: >-
-          --health-cmd mongo
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
-        ports:
-          - 27017:27017
-
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -33,6 +18,15 @@ jobs:
         uses: actions/setup-python@v2
         with:
           python-version: 3.8
+
+      - name: Start MongoDB
+          uses: supercharge/mongodb-github-action@1.10.0
+          with:
+            mongodb-version: 4.2
+            mongodb-username: ${{ secrets.MONGO_USERNAME }}
+            mongodb-password: ${{ secrets.MONGO_PASSWORD }}
+            mongodb-db: ComponentStockTesting
+            mongodb-port: 27017
 
       - name: Install dependencies
         run: |
