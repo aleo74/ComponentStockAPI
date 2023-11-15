@@ -9,19 +9,22 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-
-    services:
-      mongodb:
-        image: mongo:latest
-        env:
-          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_USERNAME }}
-          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
-        ports:
-          - 27017:27017
+    strategy:
+      matrix:
+        mongodb-version: [ '4.0', '4.2', '4.4' ]
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
+
+      - name: Start MongoDB
+          uses: MongoCamp/mongodb-github-action@1.0.0
+          with:
+            mongodb-version: ${{ matrix.mongodb-version }}
+            mongodb-username: ${{ secrets.MONGO_USERNAME }}
+            mongodb-pwd: ${{ secrets.MONGO_PASSWORD }}
+
+            - run: curl http://localhost:27017
 
       - name: Set up Python
         uses: actions/setup-python@v2
