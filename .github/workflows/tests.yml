@@ -36,6 +36,9 @@ jobs:
           echo "MongoDB Username: ${{ secrets.MONGO_USERNAME }}"
           echo "MongoDB Password: ${{ secrets.MONGO_PASSWORD }}"
 
+      - name: Install MongoDB Client
+        run: sudo apt-get install -y mongodb-clients
+
       - name: Test MongoDB Connection
         run: |
           mongo --username ${{ secrets.MONGO_USERNAME }} --password ${{ secrets.MONGO_PASSWORD }} --eval 'db.runCommand({ connectionStatus: 1 })'
