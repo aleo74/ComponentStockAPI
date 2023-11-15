@@ -11,10 +11,16 @@ jobs:
 
     services:
       mongodb:
-        image: mongo:latest
+        image: mongo
         env:
-          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_USERNAME }}
-          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          MONGO_INITDB_ROOT_USERNAME: root
+          MONGO_INITDB_ROOT_PASSWORD: root
+          MONGO_INITDB_DATABASE: ComponentStockTesting
+        options: >-
+          --health-cmd mongo
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
         ports:
           - 27017:27017
 
@@ -31,20 +37,10 @@ jobs:
         run: |
           pip install -r requirements.txt
 
-      - name: Print MongoDB Credentials
-        run: |
-          echo "MongoDB Username: ${{ secrets.MONGO_USERNAME }}"
-          echo "MongoDB Password: ${{ secrets.MONGO_PASSWORD }}"
-
-      - name: Test MongoDB Connection
-        run: |
-          docker pull mongo
-          docker run --rm -t mongo mongo --username ${{ secrets.MONGO_USERNAME }} --password ${{ secrets.MONGO_PASSWORD }} --eval 'db.runCommand({ connectionStatus: 1 })'
-
       - name: Run tests
         env:
-          MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
-          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
+          MONGO_USERNAME: root
+          MONGO_PASSWORD: root
           MONGO_HOST: localhost
           MONGO_PORT: 27017
           MONGO_DB: ComponentStockTesting
