@@ -39,7 +39,7 @@ jobs:
       - name: Test MongoDB Connection
         run: |
           docker pull mongo
-          docker run --rm -it mongo mongo --username ${{ secrets.MONGO_USERNAME }} --password ${{ secrets.MONGO_PASSWORD }} --eval 'db.runCommand({ connectionStatus: 1 })'
+          docker run --rm -t mongo mongo --username ${{ secrets.MONGO_USERNAME }} --password ${{ secrets.MONGO_PASSWORD }} --eval 'db.runCommand({ connectionStatus: 1 })'
 
       - name: Run tests
         env:
