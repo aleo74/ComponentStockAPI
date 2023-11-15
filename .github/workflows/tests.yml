@@ -17,7 +17,11 @@ jobs:
           MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
         ports:
           - 27017:27017
-        options: --health-cmd "mongo --eval 'db.runCommand({ connectionStatus: 1 })'"
+        healthcheck:
+          test: "CMD [\"mongo\", \"--eval\", \"db.runCommand({ connectionStatus: 1 })\"]"
+          interval: 10s
+          timeout: 5s
+          retries: 5
 
     steps:
       - name: Checkout repository
