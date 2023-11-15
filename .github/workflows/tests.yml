@@ -31,6 +31,15 @@ jobs:
         run: |
           pip install -r requirements.txt
 
+      - name: Print MongoDB Credentials
+        run: |
+          echo "MongoDB Username: ${{ secrets.MONGO_USERNAME }}"
+          echo "MongoDB Password: ${{ secrets.MONGO_PASSWORD }}"
+
+      - name: Test MongoDB Connection
+        run: |
+          mongo --username ${{ secrets.MONGO_USERNAME }} --password ${{ secrets.MONGO_PASSWORD }} --eval 'db.runCommand({ connectionStatus: 1 })'
+
       - name: Run tests
         env:
           MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
