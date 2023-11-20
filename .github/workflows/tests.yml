@@ -11,16 +11,10 @@ jobs:
 
     services:
       mongodb:
-        image: mongo
+        image: mongo:latest
         env:
-          MONGO_INITDB_ROOT_USERNAME: root
-          MONGO_INITDB_ROOT_PASSWORD: root
-          MONGO_INITDB_DATABASE: ComponentStockTesting
-        options: >-
-          --health-cmd mongo
-          --health-interval 10s
-          --health-timeout 5s
-          --health-retries 5
+          MONGO_INITDB_ROOT_USERNAME: ${{ secrets.MONGO_USERNAME }}
+          MONGO_INITDB_ROOT_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
         ports:
           - 27017:27017
 
@@ -39,8 +33,8 @@ jobs:
 
       - name: Run tests
         env:
-          MONGO_USERNAME: root
-          MONGO_PASSWORD: root
+          MONGO_USERNAME: ${{ secrets.MONGO_USERNAME }}
+          MONGO_PASSWORD: ${{ secrets.MONGO_PASSWORD }}
           MONGO_HOST: localhost
           MONGO_PORT: 27017
           MONGO_DB: ComponentStockTesting
