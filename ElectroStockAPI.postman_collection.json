@@ -1,0 +1,182 @@
+{
+	"info": {
+		"_postman_id": "b8d85f97-ffc4-48aa-b6ee-d7d130289916",
+		"name": "ElectroStockAPI",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\": \"test\",\r\n    \"password\": \"test\",\r\n    \"email\": \"a@a.fr\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:50001/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50001",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMDQwOTExMiwianRpIjoiMDkxYzdjMzMtOGVkNC00NGZmLTg1NjUtZGZjOWVjNDliN2FhIiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE3MDA0MDkxMTIsImV4cCI6MTcwMDQ5NTUxMn0.USdgSR3rWhPjWzp4HsnEpCxlS6-FklRt6oXS-JfGJ1Q",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"username\" : \"test\",\r\n    \"password\" : \"test\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:50001/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50001",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer"
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
+				}
+			]
+		},
+		{
+			"name": "Sotcks",
+			"item": [
+				{
+					"name": "Get stocks",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:50001/get_stocks/ESP32",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50001",
+							"path": [
+								"get_stocks",
+								"ESP32"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Save stock",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"name\" : \"arduino nano\",\r\n    \"desc\" : \"nano\",\r\n    \"qty\" : \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:50001/save_stock",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50001",
+							"path": [
+								"save_stock"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"auth": {
+		"type": "bearer"
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}
