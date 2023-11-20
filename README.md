@@ -1,7 +1,5 @@
 # ComponentStockAPI
 
-![ElectroStockAPI Logo](logo.png)
-
 L'API ElectroStockAPI est une solution de gestion de stocks de composants électroniques conçue pour simplifier la gestion, le suivi et le contrôle des stocks de composants électroniques. Que vous soyez un passionné d'électronique, un étudiant, un ingénieur électronique ou une petite entreprise, cette API vous permet de garder une trace efficace de vos composants électroniques, d'optimiser les réapprovisionnements et d'améliorer la gestion de projets électroniques.
 
 ## Fonctionnalités clés
@@ -14,7 +12,7 @@ L'API ElectroStockAPI est une solution de gestion de stocks de composants élect
 
 ## Installation
 
-Suivez ces étapes pour installer et exécuter ElectroStockAPI sur votre environnement local.
+Suivez ces étapes pour installer et exécuter ComponentStockAPI sur votre environnement local.
 
 ### Prérequis
 
@@ -26,8 +24,8 @@ Suivez ces étapes pour installer et exécuter ElectroStockAPI sur votre environ
 1. Clonez le référentiel depuis GitHub :
 
    ```bash
-   git clone https://github.com/votre-utilisateur/ElectroStockAPI.git
-   cd ElectroStockAPI
+   git clone https://github.com/aleo74/ComponentStockAPI
+   cd ComponentStockAPI
 
 2. Créez un environnement virtuel (recommandé) :
 
@@ -40,12 +38,8 @@ Suivez ces étapes pour installer et exécuter ElectroStockAPI sur votre environ
 
         pip install -r requirements.txt
 
-4. Configurez les variables d'environnement en créant un fichier .env à la racine du projet. Voici un exemple de contenu :
+4. Configurez les variables d'environnement en copiant, modifiant er en renomant le fichier .env.example en .env à la racine du projet.
 
-        FLASK_APP=app.py
-        FLASK_ENV=development
-        MONGODB_URI=mongodb://localhost:27017/electrostockdb
-        SECRET_KEY=your_secret_key_here
 
 Assurez-vous de personnaliser les valeurs des variables d'environnement en fonction de votre configuration.
 
