@@ -1,37 +1,38 @@
+from dotenv import load_dotenv
 import os
-
+load_dotenv()
 
 class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY') or '7soino32noonN@^#iuiuw9'
 
     MONGODB_CONFIG = {
         'production': {
-            'MONGODB_SERVER': 'production_server',
-            'MONGODB_PORT': 27017,
-            'MONGODB_DB': 'production_db',
-            'MONGODB_USERNAME': 'production_user',
-            'MONGODB_PASSWORD': 'production_password'
+            'MONGODB_SERVER': os.getenv('PROD_MONGODB_SERVER'),
+            'MONGODB_PORT': os.getenv('PROD_MONGODB_PORT'),
+            'MONGODB_DB': os.getenv('PROD_MONGODB_DB'),
+            'MONGODB_USERNAME': os.getenv('PROD_MONGODB_USERNAME'),
+            'MONGODB_PASSWORD': os.getenv('PROD_MONGODB_PASSWORD'),
         },
         'development': {
-            'MONGODB_SERVER': '127.0.0.1',
-            'MONGODB_PORT': 27017,
-            'MONGODB_DB': 'ComponentStock',
-            'MONGODB_USERNAME': 'root',
-            'MONGODB_PASSWORD': 'root'
+            'MONGODB_SERVER': os.environ.get('DEV_MONGODB_SERVER'),
+            'MONGODB_PORT': os.environ.get('DEV_MONGODB_PORT'),
+            'MONGODB_DB': os.environ.get('DEV_MONGODB_DB'),
+            'MONGODB_USERNAME': os.environ.get('DEV_MONGODB_USERNAME'),
+            'MONGODB_PASSWORD': os.environ.get('DEV_MONGODB_PASSWORD'),
         },
         'api': {
-            'MONGODB_SERVER': 'api_server',
-            'MONGODB_PORT': 27017,
-            'MONGODB_DB': 'api_db',
-            'MONGODB_USERNAME': 'api_user',
-            'MONGODB_PASSWORD': 'api_password'
+            'MONGODB_SERVER': os.environ.get('API_MONGODB_SERVER'),
+            'MONGODB_PORT': os.environ.get('API_MONGODB_PORT'),
+            'MONGODB_DB': os.environ.get('API_MONGODB_DB'),
+            'MONGODB_USERNAME': os.environ.get('API_MONGODB_USERNAME'),
+            'MONGODB_PASSWORD': os.environ.get('API_MONGODB_PASSWORD'),
         },
         'testing': {
-            'MONGODB_SERVER': '127.0.0.1',
-            'MONGODB_PORT': 27017,
-            'MONGODB_DB': 'ComponentStockTesting',
-            'MONGODB_USERNAME': 'root',
-            'MONGODB_PASSWORD': 'root'
+            'MONGODB_SERVER': os.environ.get('TEST_MONGODB_SERVER'),
+            'MONGODB_PORT': os.environ.get('TEST_MONGODB_PORT'),
+            'MONGODB_DB': os.environ.get('TEST_MONGODB_DB'),
+            'MONGODB_USERNAME': os.environ.get('TEST_MONGODB_USERNAME'),
+            'MONGODB_PASSWORD': os.environ.get('TEST_MONGODB_PASSWORD'),
         }
     }
 
@@ -42,7 +43,7 @@ class Config(object):
 
     CSRF_SESSION_KEY = os.getenv('CSRF_SESSION_KEY')
 
-    RATE_LIMITER_OPTS = [ '200 per day', '50 per hour']
+    RATE_LIMITER_OPTS = ['200 per day', '50 per hour']
 
     ADMINS = ['admin@gmail.com']
 

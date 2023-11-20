@@ -1,16 +1,16 @@
 from datetime import timedelta
-
 from flask import Flask
 from flask_jwt_extended import JWTManager
-
 from app.config import config
 from flask_login import LoginManager
 from flask_wtf.csrf import CSRFProtect
 from flask_pymongo import PyMongo
-
 from routes.api import main_bp
+from dotenv import load_dotenv
+import os
 
 
+load_dotenv()
 # Set up Flask-login
 login_manager = LoginManager()
 login_manager.session_protection = 'strong'
@@ -30,7 +30,7 @@ def create_app(config_name):
     app = Flask(__name__)
     app.config.from_object(config[config_name])
 
-    app.config['JWT_SECRET_KEY'] = 'your_secret_key123'  # TODO : move this in .env
+    app.config['JWT_SECRET_KEY'] = os.environ.get('your_secret_key123')
     app.config['JWT_ACCESS_TOKEN_EXPIRES'] = timedelta(days=1)
 
     jwt = JWTManager(app)
