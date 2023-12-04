@@ -1,4 +1,6 @@
 from datetime import datetime
+
+from bson import ObjectId
 from flask_jwt_extended import jwt_required
 from app.models.stocks import Stocks
 from flask import jsonify
@@ -35,6 +37,7 @@ class StockController:
             return jsonify({'message': f"Stock avec le nom '{name}' introuvable."}), 40
 
     @classmethod
+    @jwt_required()
     def save_stock(cls):
         data = request.get_json()
         name = data['name']
@@ -56,6 +59,20 @@ class StockController:
             None
 
     @classmethod
+    @jwt_required()
+    def edit_stock(cls, stock_id):
+        data = request.get_json()
+        stock = cls.find_one({'_id': ObjectId(stock_id)})
+
+        if stock and 'qty' in data:
+            stock['qty'] = data['qty']
+            cls.update_one(stock['_id'], stock)
+
+            return jsonify({"message": "Stock mis à jour avec succès"}), 200
+        else:
+            return jsonify({'message': f"Stock avec l'ID '{stock_id}' introuvable."}), 404
+
+    @classmethod
     def find_one(cls, query):
         return app.db.db.stocks.find_one(query)
 
@@ -70,3 +87,7 @@ class StockController:
     @classmethod
     def delete_many(cls, query):
         return app.db.db.stocks.delete_many(query)
+
+    @classmethod
+    def update_one(cls, id, query):
+        return app.db.db.stocks.update_one({'_id': id}, {'$set': query})
