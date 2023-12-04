@@ -152,12 +152,48 @@
 						}
 					},
 					"response": []
+				},
+				{
+					"name": "Edit Stock",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"qty\" : \"2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:50001/edit_stock/6554a0c79423ac3d04c2b01b",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "50001",
+							"path": [
+								"edit_stock",
+								"6554a0c79423ac3d04c2b01b"
+							]
+						}
+					},
+					"response": []
 				}
 			]
 		}
 	],
 	"auth": {
-		"type": "bearer"
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTcwMTY4MTQ4MCwianRpIjoiMjg1NGRkZGUtZjcyMy00ZjM0LTljOGUtNzhmZmUxYTk3Yzg2IiwidHlwZSI6ImFjY2VzcyIsInN1YiI6InRlc3QiLCJuYmYiOjE3MDE2ODE0ODAsImV4cCI6MTcwMTc2Nzg4MH0.piECfAqAgyuu3R97TtIgdgCAcJ_xNuRSAoo46nLeXDc",
+				"type": "string"
+			}
+		]
 	},
 	"event": [
 		{
