@@ -84,6 +84,7 @@ class StockController:
 
         if stock and 'qty' in data:
             stock['qty'] = data['qty']
+            stock['updated_at'] = datetime.utcnow()
             cls.update_one(stock['_id'], stock)
 
             return jsonify({"message": "Stock mis à jour avec succès"}), 200
