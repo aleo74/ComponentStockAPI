@@ -7,6 +7,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_pymongo import PyMongo
 from routes.api import main_bp
 from dotenv import load_dotenv
+from flask_cors import CORS, cross_origin
 import os
 
 
@@ -28,6 +29,8 @@ def create_app(config_name):
     """For to use dynamic environment"""
     global security
     app = Flask(__name__)
+    cors = CORS(app)
+    app.config['CORS_HEADERS'] = 'Content-Type'
     app.config.from_object(config[config_name])
 
     app.config['JWT_SECRET_KEY'] = os.environ.get('your_secret_key123')
