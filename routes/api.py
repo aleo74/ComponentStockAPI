@@ -7,7 +7,9 @@ main_bp = Blueprint('main', __name__)
 
 main_bp.add_url_rule('/save_stock', 'save_stock', StockController.save_stock, methods=['POST'])
 main_bp.add_url_rule('/get_one_stock/<string:name>', 'get_one_stock', StockController.get_one_stock)
-main_bp.add_url_rule('/get_stocks/<string:name>', 'get_stocks', StockController.get_stocks)
+main_bp.add_url_rule('/get_stocks/<string:name>', 'get_stocks_by_name', StockController.get_stocks_by_name)
+main_bp.add_url_rule('/get_stock_id/<string:stock_id>', 'get_stocks_by_id', StockController.get_stock_by_id)
+main_bp.add_url_rule('/get_stocks', 'get_stocks', StockController.get_stocks)
 main_bp.add_url_rule('/edit_stock/<string:stock_id>', 'edit_stock', StockController.edit_stock, methods=['PUT'])
 
 

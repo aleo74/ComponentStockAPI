@@ -16,7 +16,6 @@ class StockController:
         stock = cls.find_one({'name': name})
 
         if stock:
-            # Stock trouvé, renvoyez-le en tant que réponse JSON
             stock['_id'] = str(stock['_id'])
             return jsonify(stock)
         else:
@@ -25,7 +24,7 @@ class StockController:
 
     @classmethod
     @jwt_required()
-    def get_stocks(cls, name):
+    def get_stocks_by_name(cls, name):
         stocks_cursor = cls.find({'name': name})
         stocks = list(stocks_cursor)
 
@@ -38,12 +37,31 @@ class StockController:
 
     @classmethod
     @jwt_required()
+    def get_stock_by_id(cls, stock_id):
+        stock = cls.find_one({'_id': ObjectId(stock_id)})
+        if stock:
+            stock['_id'] = str(stock['_id'])
+            return jsonify(stock), 200
+        else:
+            return jsonify({'message': f"Stock avec l'ID '{stock_id}' introuvable."}), 404
+
+    @classmethod
+    @jwt_required()
+    def get_stocks(cls):
+        stocks = cls.find({})
+        stock_list = []
+        for stock in stocks:
+            stock['_id'] = str(stock['_id'])
+            stock_list.append(stock)
+        return jsonify(stock_list), 200
+
+    @classmethod
+    @jwt_required()
     def save_stock(cls):
         data = request.get_json()
         name = data['name']
         desc = data['desc']
         qty = data['qty']
-        print(name)
         if cls.save(Stocks(name, desc, qty)):
             response_data = {"message": "Stock enregistre avec succes"}
             return jsonify(response_data), 200
