@@ -60,19 +60,22 @@ class StockController:
     def save_stock(cls):
         data = request.get_json()
         name = data['name']
-        desc = data['desc']
+        desc = data['description']
         qty = data['qty']
-        if cls.save(Stocks(name, desc, qty)):
-            response_data = {"message": "Stock enregistre avec succes"}
+        saved_stock = cls.save(Stocks(name, desc, qty))
+        if saved_stock:
+            response_data = {"message": "Stock enregistre avec succes", "stock": saved_stock}
             return jsonify(response_data), 200
 
     @classmethod
     def save(cls, stockToSave):
         stockToSave.updated_at = datetime.utcnow()
-        result = app.db.db.stocks.insert_one(stockToSave.to_dict())
+        result = cls.insert_one(stockToSave.to_dict())
         inserted_id = result.inserted_id
         if inserted_id:
-            return inserted_id
+            stockToSave._id = str(inserted_id)
+            saved_stock = stockToSave.to_dict()
+            return saved_stock
         else:
             None
 
@@ -98,6 +101,10 @@ class StockController:
     @classmethod
     def find(cls, query):
         return app.db.db.stocks.find(query)
+
+    @classmethod
+    def insert_one(cls, query):
+        return app.db.db.stocks.insert_one(query)
 
     @classmethod
     def delete_one(cls, query):
