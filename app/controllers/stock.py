@@ -87,6 +87,8 @@ class StockController:
 
         if stock and 'qty' in data:
             stock['qty'] = data['qty']
+            stock['name'] = data['name']
+            stock['description'] = data['description']
             stock['updated_at'] = datetime.utcnow()
             cls.update_one(stock['_id'], stock)
 
