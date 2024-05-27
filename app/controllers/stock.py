@@ -33,7 +33,7 @@ class StockController:
                 stock['_id'] = str(stock['_id'])
             return jsonify(stocks)
         else:
-            return jsonify({'message': f"Stock avec le nom '{name}' introuvable."}), 40
+            return jsonify({'message': f"Stock avec le nom '{name}' introuvable."}), 404
 
     @classmethod
     @jwt_required()
