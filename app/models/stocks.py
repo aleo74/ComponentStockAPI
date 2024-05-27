@@ -7,6 +7,7 @@ class Stocks:
         self.description = description
         self.qty = qty
         self.created_at = datetime.utcnow()
+        self.updated_at = datetime.utcnow()
 
     def to_dict(self):
         return self.__dict__
