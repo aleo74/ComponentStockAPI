@@ -57,6 +57,16 @@ class StockController:
 
     @classmethod
     @jwt_required()
+    def delete_stock(cls, stock_id):
+        stock = cls.find_one({'_id': ObjectId(stock_id)})
+        if stock:
+            cls.delete_one(stock)
+            return ({'message': "Supression effectuée"}), 200
+        else:
+            return jsonify({'message': f"Stock avec l'ID '{stock_id}' introuvable."}), 404
+
+    @classmethod
+    @jwt_required()
     def save_stock(cls):
         data = request.get_json()
         name = data['name']

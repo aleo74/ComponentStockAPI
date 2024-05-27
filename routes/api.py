@@ -11,6 +11,7 @@ main_bp.add_url_rule('/get_stocks/<string:name>', 'get_stocks_by_name', StockCon
 main_bp.add_url_rule('/get_stock_id/<string:stock_id>', 'get_stocks_by_id', StockController.get_stock_by_id)
 main_bp.add_url_rule('/get_stocks', 'get_stocks', StockController.get_stocks)
 main_bp.add_url_rule('/edit_stock/<string:stock_id>', 'edit_stock', StockController.edit_stock, methods=['PUT'])
+main_bp.add_url_rule('/delete_stock/<string:stock_id>', 'delete_stock', StockController.delete_stock, methods=['DELETE'])
 
 
 # AUTH
