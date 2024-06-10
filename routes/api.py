@@ -13,6 +13,7 @@ main_bp.add_url_rule('/get_stock_id/<string:stock_id>', 'get_stocks_by_id', Stoc
 main_bp.add_url_rule('/get_stocks', 'get_stocks', StockController.get_stocks)
 main_bp.add_url_rule('/edit_stock/<string:stock_id>', 'edit_stock', StockController.edit_stock, methods=['PUT'])
 main_bp.add_url_rule('/delete_stock/<string:stock_id>', 'delete_stock', StockController.delete_stock, methods=['DELETE'])
+main_bp.add_url_rule('/images/<path:filename>', 'get_image', StockController.get_image)
 
 main_bp.add_url_rule('/save_tag', 'save_tag', TagsController.save_tag, methods=['POST'])
 main_bp.add_url_rule('/get_tags', 'get_tags', TagsController.get_tags)
