@@ -1,14 +1,18 @@
+import os
 from datetime import datetime
 
 from bson import ObjectId
 from flask_jwt_extended import jwt_required
+from werkzeug.utils import secure_filename
+
 from app.models.stocks import Stocks
-from flask import jsonify
+from flask import jsonify, send_from_directory, request
 import app
-from flask import request
+from bson.json_util import dumps
 
 
 class StockController:
+    ALLOWED_EXTENSIONS = {'txt', 'pdf', 'png', 'jpg', 'jpeg', 'gif'}
 
     @classmethod
     @jwt_required()
@@ -68,11 +72,20 @@ class StockController:
     @classmethod
     @jwt_required()
     def save_stock(cls):
-        data = request.get_json()
+        data = request.form.to_dict()
         name = data['name']
         desc = data['description']
         qty = data['qty']
-        saved_stock = cls.save(Stocks(name, desc, qty))
+        tags = data['tags']
+        filename = ''
+        if 'image' in request.files:
+            file = request.files['image']
+            if file.filename != '':
+                if file and cls.allowed_file(file.filename):
+                    filename = secure_filename(file.filename)
+                    # TODO : move folder name in env file
+                    file.save(os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../Downloads')), filename))
+        saved_stock = cls.save(Stocks(name, desc, qty, filename, tags))
         if saved_stock:
             response_data = {"message": "Stock enregistre avec succes", "stock": saved_stock}
             return jsonify(response_data), 200
@@ -92,19 +105,36 @@ class StockController:
     @classmethod
     @jwt_required()
     def edit_stock(cls, stock_id):
-        data = request.get_json()
+        data = request.form.to_dict()
         stock = cls.find_one({'_id': ObjectId(stock_id)})
+        print(data)
 
         if stock and 'qty' in data:
             stock['qty'] = data['qty']
             stock['name'] = data['name']
             stock['description'] = data['description']
             stock['updated_at'] = datetime.utcnow()
-            cls.update_one(stock['_id'], stock)
+            stock['tags'] = data['tags']
 
+            if 'image' in request.files:
+                file = request.files['image']
+                if file.filename != '':
+                    if file and cls.allowed_file(file.filename):
+                        filename = secure_filename(file.filename)
+                        file.save(
+                            os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../Downloads')),
+                                         filename))
+                        stock['image_link'] = filename
+
+            cls.update_one(stock['_id'], stock)
             return jsonify({"message": "Stock mis à jour avec succès"}), 200
         else:
             return jsonify({'message': f"Stock avec l'ID '{stock_id}' introuvable."}), 404
+
+    @classmethod
+    @jwt_required()
+    def get_image(cls, filename):
+        return send_from_directory(os.path.join(os.path.abspath(os.path.join(os.path.dirname(__file__), '../../Downloads'))), filename)
 
     @classmethod
     def find_one(cls, query):
@@ -129,3 +159,8 @@ class StockController:
     @classmethod
     def update_one(cls, id, query):
         return app.db.db.stocks.update_one({'_id': id}, {'$set': query})
+
+    @classmethod
+    def allowed_file(cls, filename):
+        return '.' in filename and \
+               filename.rsplit('.', 1)[1].lower() in cls.ALLOWED_EXTENSIONS

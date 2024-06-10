@@ -1,13 +1,11 @@
 from datetime import datetime
 
 
-class Stocks:
-    def __init__(self, name, description, qty, imgLink, tags):
+class Tags:
+    def __init__(self, name, description, color):
         self.name = name
         self.description = description
-        self.qty = qty
-        self.image_link = imgLink
-        self.tags = tags
+        self.color = color
         self.created_at = datetime.utcnow()
         self.updated_at = datetime.utcnow()
 
