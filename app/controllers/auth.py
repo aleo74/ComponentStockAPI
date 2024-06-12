@@ -36,10 +36,9 @@ class AuthController:
             userData = cls.find_one({'username': username})
 
             if userData:
-                user = User(username=userData['username'], password=password, email=userData['email'])
+                user = User(username=userData['username'], password=userData['password'], email=userData['email'])
 
                 if user.check_password(password):
-                    # Générez un jeton d'authentification
                     access_token = create_access_token(identity=username)
 
                     return jsonify({'access_token': access_token}), 200

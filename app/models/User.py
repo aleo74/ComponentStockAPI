@@ -6,7 +6,7 @@ class User:
     def __init__(self, username, email, password):
         self.username = username
         self.email = email
-        self.password = generate_password_hash(password)
+        self.password = password
         self.created_at = datetime.utcnow()
 
     def to_dict(self):
