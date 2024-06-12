@@ -3,6 +3,7 @@ from flask import request, jsonify
 from app.models.User import User
 from datetime import datetime
 import app
+from werkzeug.security import generate_password_hash
 
 
 class AuthController:
@@ -16,7 +17,7 @@ class AuthController:
             email = data['email']
 
             # Créez un nouvel utilisateur
-            user = User(username=username, password=password, email=email)
+            user = User(username=username, password=generate_password_hash(password), email=email)
 
             try:
                 idUser = cls.save(user)
