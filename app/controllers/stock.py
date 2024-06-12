@@ -73,6 +73,8 @@ class StockController:
     @jwt_required()
     def save_stock(cls):
         data = request.form.to_dict()
+        if not data:
+            data = request.get_json()
         name = data['name']
         desc = data['description']
         qty = data['qty']
@@ -106,8 +108,10 @@ class StockController:
     @jwt_required()
     def edit_stock(cls, stock_id):
         data = request.form.to_dict()
-        stock = cls.find_one({'_id': ObjectId(stock_id)})
+        if not data:
+            data = request.get_json()
         print(data)
+        stock = cls.find_one({'_id': ObjectId(stock_id)})
 
         if stock and 'qty' in data:
             stock['qty'] = data['qty']
